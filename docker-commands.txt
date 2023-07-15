@@ -1,0 +1,10 @@
+This document illustrates how to create and run docker image from the spring boot app 'sts-upload-download-manager'
+Note that Java 17 is required.
+
+* open cmd inside the project's directory
+* In case there is not jar file inside folder '/target', kindly build it using maven with the below command
+	>> mvn clean install
+* to build the docker image, kindly type the below command
+	>> docker build --tag=sts-upload-download-manager --force-rm=true .
+* to run the docker image, kindly type the below command ((but note that you have to replace "MACHINE_IP_ADDRESS" with your machine's ip address))
+	>> docker run -d -p 8383:8383 -e "server.port=8383" -e "spring.datasource.url=jdbc:postgresql://MACHINE_IP_ADDRESS:5432/postgres" -e "spring.datasource.username=postgres" -e "spring.datasource.password=docker" -e "base-path=/filesMgr/"  sts-upload-download-manager

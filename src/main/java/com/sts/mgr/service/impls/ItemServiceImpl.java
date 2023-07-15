@@ -61,6 +61,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public JsonResponseDto createSpace(JsonRequestDto jsonRequest) throws UnAuthorizedUserException {
+		LOGGER.info("creating space ......");
 		/* start validation */
 		PermissionEntity permissionEntity = permissionRepository.findById(jsonRequest.getUserId()).orElse(null);
 		if (permissionEntity == null) {
@@ -75,6 +76,7 @@ public class ItemServiceImpl implements ItemService {
 
 		/* creating the folder */
 		String filePath = basePath + spaceDefaultName + "/";
+		LOGGER.info("space's filePath to be created : " + filePath);
 		Path path = Paths.get(filePath);
 		if (Files.exists(path)) {
 			throw new RuntimeException("Space already existed");
@@ -101,12 +103,14 @@ public class ItemServiceImpl implements ItemService {
 		BeanUtils.copyProperties(permissionEntity.getPermissionGroupEntity(), permissionGroupDto);
 		itemDto.setPermissionGroup(permissionGroupDto);
 
+		LOGGER.info("created space successfully");
 		return JsonResponseDto.success(itemDto);
 
 	}
 
 	@Override
 	public JsonResponseDto createFolder(JsonRequestDto jsonRequest) throws UnAuthorizedUserException {
+		LOGGER.info("creating folder ......");
 		/* start validation */
 		PermissionEntity permissionEntity = permissionRepository.findById(jsonRequest.getUserId()).orElse(null);
 		if (permissionEntity == null) {
@@ -120,6 +124,7 @@ public class ItemServiceImpl implements ItemService {
 
 		/* creating the folder */
 		String filePath = basePath + spaceDefaultName + "/" + folderDefaultName + "/";
+		LOGGER.info("folder's filePath to be created : " + filePath);
 		Path path = Paths.get(filePath);
 		if (Files.exists(path)) {
 			throw new RuntimeException("Folder already existed");
@@ -146,11 +151,13 @@ public class ItemServiceImpl implements ItemService {
 		BeanUtils.copyProperties(permissionEntity.getPermissionGroupEntity(), permissionGroupDto);
 		itemDto.setPermissionGroup(permissionGroupDto);
 
+		LOGGER.info("created folder successfully");
 		return JsonResponseDto.success(itemDto);
 	}
 
 	@Override
 	public JsonResponseDto createFile(JsonRequestDto jsonRequest) throws UnAuthorizedUserException {
+		LOGGER.info("creating file ......");
 		/* start validation */
 		PermissionEntity permissionEntity = permissionRepository.findById(jsonRequest.getUserId()).orElse(null);
 		if (permissionEntity == null) {
@@ -164,6 +171,7 @@ public class ItemServiceImpl implements ItemService {
 
 		/* started creating the file */
 		String filePath = basePath + spaceDefaultName + "/" + folderDefaultName + "/" + fileDefaultName;
+		LOGGER.info("file's filePath to be created : " + filePath);
 		Path path = Paths.get(filePath);
 		if (Files.exists(path)) {
 			throw new RuntimeException("File already existed");
@@ -207,6 +215,8 @@ public class ItemServiceImpl implements ItemService {
 		PermissionGroupDto permissionGroupDto = new PermissionGroupDto();
 		BeanUtils.copyProperties(fileEntity.getItemEntity().getPermissionGroupEntity(), permissionGroupDto);
 		itemDto.setPermissionGroup(permissionGroupDto);
+		
+		LOGGER.info("created file successfully");
 		return JsonResponseDto.success(fileDto);
 	}
 
