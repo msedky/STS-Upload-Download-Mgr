@@ -1,0 +1,7 @@
+This document illustrates how to create and run docker image from the design's section DATABASE
+
+* open cmd inside the this path's directory directory
+* to build the docker image, kindly type the below command
+	>> docker build --tag=postgres-db --force-rm=true .
+* to run the docker image, kindly type the below command
+	>> docker run --name postgres-db -p 5432:5432 -d postgres-db
